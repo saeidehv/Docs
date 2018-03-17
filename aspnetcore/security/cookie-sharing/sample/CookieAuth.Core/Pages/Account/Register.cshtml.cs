@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using CookieAuthCore.Data;
 using CookieAuthCore.Models;
@@ -109,8 +108,8 @@ namespace CookieAuthCore.Pages.Account
                     // The full path or absolute URI to be used as an http 
                     // redirect response value.
                 };
-
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, 
+//CookieAuthenticationDefaults.AuthenticationScheme
+                await HttpContext.SignInAsync("Identity.Application", 
                     new ClaimsPrincipal(claimsIdentity), authProperties);
 
                 _logger.LogInformation($"User {user.Email} registered and logged in at {DateTime.UtcNow}.");

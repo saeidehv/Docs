@@ -31,17 +31,21 @@ namespace CookieAuthWithIdentityCore
                 .PersistKeysToFileSystem(keyRingFolderPath);
 
             var protectionProvider = DataProtectionProvider.Create(keyRingFolderPath);
+            //var protectionProvider = DataProtectionProvider.Create("CookieAuthWithIdentity.Core");
 
             services.ConfigureApplicationCookie(options => {
                 options.Cookie.Name = ".AspNet.SharedCookie";
-
+                options.DataProtectionProvider = protectionProvider;
+                options.DataProtectionProvider.CreateProtector("Identity.Application");
+/*
                 options.DataProtectionProvider = protectionProvider;
                 options.TicketDataFormat = 
                     new TicketDataFormat(
                         protectionProvider.CreateProtector(
                             "Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationMiddleware", 
-                            "Identity.Application", 
+                            "Cookies", 
                             "v2"));
+                            */
             });
             #endregion
 

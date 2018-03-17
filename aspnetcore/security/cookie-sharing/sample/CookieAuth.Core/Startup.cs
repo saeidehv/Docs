@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using CookieAuthCore.Data;
+using Microsoft.AspNetCore.Authentication;
 
 namespace CookieAuthCore
 {
@@ -25,13 +26,23 @@ namespace CookieAuthCore
                 });
 
             #region snippet1
-            services.AddDataProtection()
-                .PersistKeysToFileSystem(GetKeyRingDirInfo());
+            var keyRingFolderPath = GetKeyRingDirInfo();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
+            services.AddDataProtection()
+                .PersistKeysToFileSystem(keyRingFolderPath);
+
+            //var protectionProvider = DataProtectionProvider.Create("CookieAuth.Core");
+            //var protectionProvider = DataProtectionProvider.Create(keyRingFolderPath);
+//CookieAuthenticationDefaults.AuthenticationScheme
+            services.AddAuthentication("Identity.Application")
+                .AddCookie("Identity.Application", options =>
                 {
                     options.Cookie.Name = ".AspNet.SharedCookie";
+                    //options.DataProtectionProvider = protectionProvider;
+                    //options.DataProtectionProvider.CreateProtector("Identity.Application");
+                    
+                    //options.DataProtectionProvider = DataProtectionProvider.Create(
+                        //GetKeyRingDirInfo());
                 });
             #endregion
 
