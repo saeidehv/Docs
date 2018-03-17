@@ -25,7 +25,7 @@ namespace CookieAuthWithIdentityCore
                 .AddDefaultTokenProviders();
 
             #region snippet1
-            var keyRingFolderPath = GetKeyRingFolderPath();
+            var keyRingFolderPath = GetKeyRingDirInfo();
 
             services.AddDataProtection()
                 .PersistKeysToFileSystem(keyRingFolderPath);
@@ -78,7 +78,7 @@ namespace CookieAuthWithIdentityCore
         // finds the KeyRing folder in the sample. Using this
         // approach allows the sample to run from a Debug
         // or Release location within the bin folder.
-        private DirectoryInfo GetKeyRingFolderPath()
+        private DirectoryInfo GetKeyRingDirInfo()
         {
             var startupAssembly = System.Reflection.Assembly.GetExecutingAssembly();
             var applicationBasePath = System.AppContext.BaseDirectory;
